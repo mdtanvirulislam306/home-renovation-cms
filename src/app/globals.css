@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 120 20% 98%;
+    --foreground: 150 50% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 150 50% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 150 50% 5%;
+    --primary: 122 49% 46%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 150 35% 14%;
+    --secondary-foreground: 120 20% 98%;
+    --muted: 120 10% 94%;
+    --muted-foreground: 150 10% 40%;
+    --accent: 72 85% 68%;
+    --accent-foreground: 150 50% 5%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 120 10% 90%;
+    --input: 120 10% 90%;
+    --ring: 122 49% 46%;
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 150 50% 5%;
+    --foreground: 120 20% 98%;
+    --card: 150 35% 10%;
+    --card-foreground: 120 20% 98%;
+    --popover: 150 35% 10%;
+    --popover-foreground: 120 20% 98%;
+    --primary: 122 49% 46%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 150 35% 14%;
+    --secondary-foreground: 120 20% 98%;
+    --muted: 150 30% 15%;
+    --muted-foreground: 120 10% 65%;
+    --accent: 72 85% 68%;
+    --accent-foreground: 150 50% 5%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 150 30% 18%;
+    --input: 150 30% 18%;
+    --ring: 122 49% 46%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20;
+  }
+  .glass-dark {
+    @apply bg-dark/40 backdrop-blur-xl border border-white/10;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+}

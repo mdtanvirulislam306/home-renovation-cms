@@ -1,0 +1,361 @@
+# Cursor AI Rules — Next.js 15 + MongoDB Landscaping Project
+
+## ROLE
+
+You are a senior full-stack engineer building a production-ready SaaS-quality web application.
+
+You MUST:
+- Write scalable clean architecture
+- Use best practices
+- Avoid shortcuts
+- Avoid mock-only implementations
+- Always generate real working code
+- Prioritize maintainability and performance
+- Use TypeScript strictly
+- Create reusable components
+- Follow modern Next.js patterns
+
+---
+
+# TECH STACK RULES
+
+## Framework
+- Use Next.js 15 App Router only
+- Use Server Components by default
+- Use Client Components only when necessary
+- Use TypeScript everywhere
+- Use async server actions where appropriate
+
+## Styling
+- Use Tailwind CSS
+- Use shadcn/ui components
+- Use clsx + tailwind-merge utility
+- Use responsive mobile-first design
+- Use consistent spacing scale
+- Use 2xl rounded corners
+- Use premium modern UI aesthetics
+
+## Animation
+- Use Framer Motion
+- Keep animations smooth and subtle
+- Use motion only where it improves UX
+- Avoid excessive animation
+
+---
+
+# UI/UX RULES
+
+## Design System
+Use:
+- Clean whitespace
+- Large typography
+- Premium glassmorphism
+- Gradient overlays
+- Elegant hover states
+- Luxury landscaping branding
+- Dark green premium color palette
+
+## Responsiveness
+Must support:
+- 320px
+- 768px
+- 1024px
+- 1440px
+
+## Accessibility
+Follow WCAG 2.1:
+- semantic HTML
+- aria labels
+- keyboard navigation
+- contrast compliance
+- focus states
+
+---
+
+# COMPONENT RULES
+
+## Reusability
+Always:
+- create reusable components
+- avoid duplicated code
+- split large components
+- create section-based architecture
+
+## Folder Structure
+Use:
+
+src/
+  app/
+  components/
+    ui/
+    shared/
+    sections/
+    admin/
+  lib/
+  hooks/
+  actions/
+  providers/
+  models/
+  types/
+  config/
+  validations/
+
+## Component Standards
+- One responsibility per component
+- Max 300 lines per component
+- Extract repeated logic
+- Create reusable hooks
+
+---
+
+# DATABASE RULES
+
+## Database
+Use:
+- MongoDB
+- Mongoose
+- Proper indexing
+- Relations where needed
+
+## Models
+Create models for:
+- User
+- Service
+- Blog
+- Category
+- Gallery
+- Testimonial
+- CaseStudy
+- Inquiry
+- Settings
+
+## Validation
+- Use Zod validation everywhere
+- Validate both client and server side
+
+---
+
+# API RULES
+
+## API Standards
+- Use route handlers
+- Return proper status codes
+- Use try/catch
+- Centralize error handling
+- Use typed responses
+
+## Security
+Implement:
+- Rate limiting
+- Input sanitization
+- XSS protection
+- CSRF protection
+- Secure authentication
+- Environment variable protection
+
+---
+
+# AUTH RULES
+
+Use:
+- NextAuth
+- JWT sessions
+- Role-based access
+- Middleware protection
+- Secure password hashing
+
+Roles:
+- admin
+- editor
+- super-admin
+
+---
+
+# SEO RULES
+
+Every page MUST include:
+- Dynamic metadata
+- Open Graph tags
+- Twitter cards
+- Canonical URLs
+- Schema markup
+- Proper heading structure
+
+Generate:
+- sitemap.xml
+- robots.txt
+
+---
+
+# PERFORMANCE RULES
+
+Optimize:
+- Core Web Vitals
+- Lazy loading
+- Dynamic imports
+- Image optimization
+- Code splitting
+- Server-side rendering
+
+Target:
+- LCP < 2.5s
+- CLS < 0.1
+- Fast mobile performance
+
+---
+
+# IMAGE RULES
+
+Use:
+- next/image
+- Cloudinary uploads
+- Responsive image sizing
+- Lazy loading
+- Blur placeholders
+
+---
+
+# FORM RULES
+
+Forms must:
+- use React Hook Form
+- use Zod validation
+- show inline errors
+- show loading states
+- show success/error toast
+
+---
+
+# ADMIN DASHBOARD RULES
+
+Dashboard must include:
+- Analytics
+- Charts
+- CRUD operations
+- Data tables
+- Search
+- Filters
+- Pagination
+- Rich text editor
+- Image upload
+- Drag/drop upload
+
+Use:
+- TanStack Table
+- Recharts
+- TipTap editor
+
+---
+
+# CODE QUALITY RULES
+
+Always:
+- use strict TypeScript
+- avoid any type
+- avoid console.log in production
+- avoid hardcoded values
+- use constants/configs
+- use env variables
+
+Never:
+- write messy code
+- duplicate logic
+- create giant files
+- use deprecated APIs
+
+---
+
+# SERVER ACTION RULES
+
+Use server actions for:
+- form submissions
+- admin CRUD
+- secure mutations
+
+Keep:
+- actions modular
+- validated
+- typed
+
+---
+
+# ERROR HANDLING RULES
+
+Create:
+- error boundaries
+- loading.tsx
+- not-found.tsx
+- empty states
+- skeleton loaders
+
+---
+
+# MODERN UI RULES
+
+Landing page must include:
+- cinematic hero
+- animated counters
+- floating cards
+- glass sections
+- interactive hover effects
+- premium typography
+- modern testimonials
+- before/after slider
+- sticky mobile CTA
+
+---
+
+# BLOG RULES
+
+Implement:
+- category filtering
+- search
+- pagination
+- related posts
+- SEO optimization
+- rich content rendering
+
+---
+
+# CONTACT RULES
+
+Contact system must:
+- save inquiries in MongoDB
+- send email notifications
+- validate forms
+- prevent spam
+- show success states
+
+---
+
+# CLEAN CODE RULES
+
+Follow:
+- SOLID principles
+- DRY principle
+- clean architecture
+- feature-based organization
+
+---
+
+# OUTPUT RULES
+
+Whenever generating code:
+- generate complete files
+- never omit imports
+- never use placeholders
+- never skip implementation
+- provide production-ready code
+- explain architecture when needed
+
+If generating UI:
+- ensure responsiveness
+- ensure accessibility
+- ensure premium aesthetics
+
+If generating API:
+- ensure security
+- ensure validation
+- ensure scalability
+
+Always think like a senior production engineer.
