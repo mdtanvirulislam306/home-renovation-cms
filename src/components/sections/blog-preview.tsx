@@ -1,18 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
+import { getPopulatedName } from "@/lib/mongoose-utils";
+import type { BlogCard } from "@/types/content";
 
-interface BlogPreviewItem {
-  _id?: string;
-  slug?: string;
-  title?: string;
-  excerpt?: string;
-  featuredImage?: string;
-  publishDate?: Date | string;
-  category?: { name?: string };
-}
-
-export function BlogPreview({ posts }: { posts: BlogPreviewItem[] }) {
+export function BlogPreview({ posts }: { posts: BlogCard[] }) {
   if (!posts.length) return null;
 
   return (
@@ -45,8 +37,8 @@ export function BlogPreview({ posts }: { posts: BlogPreviewItem[] }) {
                 />
               </div>
               <div className="p-6">
-                {post.category?.name && (
-                  <span className="text-xs font-medium text-primary">{post.category.name}</span>
+                {getPopulatedName(post.category) && (
+                  <span className="text-xs font-medium text-primary">{getPopulatedName(post.category)}</span>
                 )}
                 <h3 className="mt-2 text-lg font-bold group-hover:text-primary">{post.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{post.excerpt}</p>

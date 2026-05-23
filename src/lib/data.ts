@@ -105,8 +105,8 @@ export async function getSettings() {
   await connectDB();
   let settings = await Settings.findOne().lean();
   if (!settings) {
-    const created = await Settings.create({});
-    settings = created.toObject();
+    await Settings.create({});
+    settings = await Settings.findOne().lean();
   }
   return settings;
 }

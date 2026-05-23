@@ -6,6 +6,7 @@ import { getBlogBySlug, getRelatedBlogs } from "@/lib/data";
 import { generatePageMetadata, generateArticleSchema } from "@/lib/seo";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { formatDate } from "@/lib/utils";
+import { getRefId, getPopulatedName } from "@/lib/mongoose-utils";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -28,7 +29,8 @@ export default async function BlogDetailPage({
   const blog = await getBlogBySlug(slug).catch(() => null);
   if (!blog) notFound();
 
-  const categoryId = (blog.category as { _id?: string })?._id?.toString() || String(blog.category);
+  const categoryId = getRefId(blog.category);
+  const categoryName = getPopulatedName(blog.category);
   const related = await getRelatedBlogs(categoryId, slug).catch(() => []);
 
   const schema = generateArticleSchema({
@@ -56,10 +58,10 @@ export default async function BlogDetailPage({
           <span>{blog.author}</span>
           <span>·</span>
           <time>{formatDate(blog.publishDate)}</time>
-          {(blog.category as { name?: string })?.name && (
+          {categoryName && (
             <>
               <span>·</span>
-              <span className="text-primary">{(blog.category as { name: string }).name}</span>
+              <span className="text-primary">{categoryName}</span>
             </>
           )}
         </div>

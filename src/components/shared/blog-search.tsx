@@ -6,13 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 
-interface Category {
-  _id?: string;
+interface CategoryItem {
+  _id?: unknown;
   name?: string;
   slug?: string;
 }
 
-export function BlogSearch({ categories }: { categories: Category[] }) {
+export function BlogSearch({ categories }: { categories: CategoryItem[] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [search, setSearch] = useState(searchParams.get("search") || "");
@@ -44,16 +44,19 @@ export function BlogSearch({ categories }: { categories: Category[] }) {
         <Button variant="outline" size="sm" onClick={() => router.push("/blog")}>
           All
         </Button>
-        {categories.map((cat) => (
+        {categories.map((cat) => {
+          const id = cat._id != null ? String(cat._id) : "";
+          return (
           <Button
-            key={cat._id?.toString()}
+            key={id || cat.slug}
             variant="outline"
             size="sm"
-            onClick={() => filterCategory(cat._id?.toString() || "")}
+            onClick={() => filterCategory(id)}
           >
             {cat.name}
           </Button>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

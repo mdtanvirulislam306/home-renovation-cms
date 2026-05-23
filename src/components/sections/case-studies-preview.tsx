@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import type { ICaseStudy } from "@/models/CaseStudy";
+import type { CaseStudyCard } from "@/types/content";
 
-export function CaseStudiesPreview({ caseStudies }: { caseStudies: Partial<ICaseStudy>[] }) {
+export function CaseStudiesPreview({ caseStudies }: { caseStudies: CaseStudyCard[] }) {
   if (!caseStudies.length) return null;
 
   return (

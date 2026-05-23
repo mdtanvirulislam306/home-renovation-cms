@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import type { IService } from "@/models/Service";
+import type { ServiceCard } from "@/types/content";
 
-export function ServicesGrid({ services }: { services: Partial<IService>[] }) {
+export function ServicesGrid({ services }: { services: ServiceCard[] }) {
   return (
     <section className="py-24">
       <div className="container mx-auto px-4 md:px-8">

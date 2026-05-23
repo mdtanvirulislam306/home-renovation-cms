@@ -12,12 +12,36 @@ import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import { toast } from "sonner";
 import slugify from "slugify";
 
+interface CaseStudyFormData {
+  title: string;
+  slug: string;
+  summary: string;
+  challenge: string;
+  solution: string;
+  results: string;
+  featuredImage: string;
+  status: string;
+  services: string[];
+  galleryImages: string[];
+}
+
 export default function CaseStudyFormPage() {
   const { id } = useParams();
   const router = useRouter();
   const isNew = id === "new";
-  const { register, handleSubmit, setValue, watch, reset, formState: { isSubmitting } } = useForm({
-    defaultValues: { status: "draft", services: [], galleryImages: [] },
+  const { register, handleSubmit, setValue, watch, reset, formState: { isSubmitting } } = useForm<CaseStudyFormData>({
+    defaultValues: {
+      title: "",
+      slug: "",
+      summary: "",
+      challenge: "",
+      solution: "",
+      results: "",
+      featuredImage: "",
+      status: "draft",
+      services: [],
+      galleryImages: [],
+    },
   });
 
   const title = watch("title");
@@ -32,7 +56,7 @@ export default function CaseStudyFormPage() {
     if (!isNew && id) fetch(`/api/case-studies/${id}`).then((r) => r.json()).then((d) => d.success && reset(d.data));
   }, [id, isNew, reset]);
 
-  const onSubmit = async (data: Record<string, unknown>) => {
+  const onSubmit = async (data: CaseStudyFormData) => {
     const res = await fetch(isNew ? "/api/case-studies" : `/api/case-studies/${id}`, {
       method: isNew ? "POST" : "PUT",
       headers: { "Content-Type": "application/json" },

@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/shared/page-header";
 import { getPublishedBlogs, getCategories } from "@/lib/data";
 import { generatePageMetadata } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
+import { getPopulatedName } from "@/lib/mongoose-utils";
 import { BlogSearch } from "@/components/shared/blog-search";
 
 export const metadata = generatePageMetadata({
@@ -58,9 +59,11 @@ export default async function BlogPage({
                 <Image src={post.featuredImage} alt={post.title} fill className="object-cover" sizes="33vw" />
               </div>
               <div className="p-6">
+                {getPopulatedName(post.category) && (
                 <span className="text-xs text-primary font-medium">
-                  {(post.category as { name?: string })?.name}
+                  {getPopulatedName(post.category)}
                 </span>
+                )}
                 <h2 className="mt-2 text-xl font-bold group-hover:text-primary">{post.title}</h2>
                 <p className="mt-2 text-muted-foreground line-clamp-2">{post.excerpt}</p>
                 <p className="mt-4 text-xs text-muted-foreground">{formatDate(post.publishDate)}</p>

@@ -4,11 +4,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
 import { Star } from "lucide-react";
-import type { ITestimonial } from "@/models/Testimonial";
+import type { TestimonialCard } from "@/types/content";
 import "swiper/css";
 import "swiper/css/pagination";
 
-export function TestimonialsCarousel({ testimonials }: { testimonials: Partial<ITestimonial>[] }) {
+export function TestimonialsCarousel({ testimonials }: { testimonials: TestimonialCard[] }) {
   if (!testimonials.length) return null;
 
   return (
@@ -28,7 +28,7 @@ export function TestimonialsCarousel({ testimonials }: { testimonials: Partial<I
           breakpoints={{ 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }}
         >
           {testimonials.map((t) => (
-            <SwiperSlide key={String(t._id)}>
+            <SwiperSlide key={t._id != null ? String(t._id) : t.name}>
               <div className="rounded-2xl border bg-card p-8 shadow-premium h-full">
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: t.rating || 5 }).map((_, i) => (

@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./theme-toggle";
 import { useUIStore } from "@/store/ui-store";
-import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 const navLinks = [

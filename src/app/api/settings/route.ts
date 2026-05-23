@@ -9,8 +9,8 @@ export async function GET() {
     await connectDB();
     let settings = await Settings.findOne().lean();
     if (!settings) {
-      const created = await Settings.create({});
-      settings = created.toObject();
+      await Settings.create({});
+      settings = await Settings.findOne().lean();
     }
     return apiSuccess(settings);
   } catch {
@@ -30,7 +30,7 @@ export async function PUT(request: Request) {
     const settings = await Settings.findOneAndUpdate({}, body, {
       new: true,
       upsert: true,
-    });
+    }).lean();
     return apiSuccess(settings);
   } catch {
     return apiError("Failed to update settings", 500);
