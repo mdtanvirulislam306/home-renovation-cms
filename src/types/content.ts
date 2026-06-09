@@ -23,6 +23,12 @@ export interface TestimonialCard {
   image?: string;
 }
 
+export interface CategoryItem {
+  _id?: string;
+  name?: string;
+  slug?: string;
+}
+
 export interface BlogCard {
   _id?: unknown;
   slug?: string;

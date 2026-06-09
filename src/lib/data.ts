@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/db";
 import { serializeForClient } from "@/lib/mongoose-utils";
+import type { CategoryItem } from "@/types/content";
 import {
   Service,
   Blog,
@@ -87,9 +88,14 @@ export async function getRelatedBlogs(categoryId: string, excludeSlug: string, l
   );
 }
 
-export async function getCategories() {
+export async function getCategories(): Promise<CategoryItem[]> {
   await connectDB();
-  return serializeForClient(await Category.find().sort({ name: 1 }).lean());
+  const categories = await Category.find().sort({ name: 1 }).lean();
+  return categories.map((cat) => ({
+    _id: String(cat._id),
+    name: cat.name,
+    slug: cat.slug,
+  }));
 }
 
 export async function getPublishedGallery() {

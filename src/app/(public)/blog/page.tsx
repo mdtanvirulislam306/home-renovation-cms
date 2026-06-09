@@ -6,6 +6,7 @@ import { generatePageMetadata } from "@/lib/seo";
 import { formatDate } from "@/lib/utils";
 import { getPopulatedName } from "@/lib/mongoose-utils";
 import { BlogSearch } from "@/components/shared/blog-search";
+import type { CategoryItem } from "@/types/content";
 
 export const metadata = generatePageMetadata({
   title: "Blog",
@@ -22,7 +23,7 @@ export default async function BlogPage({
   const page = parseInt(params.page || "1", 10);
 
   let result = { data: [] as Awaited<ReturnType<typeof getPublishedBlogs>>["data"], totalPages: 0 };
-  let categories: Awaited<ReturnType<typeof getCategories>> = [];
+  let categories: CategoryItem[] = [];
 
   try {
     [result, categories] = await Promise.all([

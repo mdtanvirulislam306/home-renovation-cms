@@ -5,12 +5,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
-
-interface CategoryItem {
-  _id?: string;
-  name?: string;
-  slug?: string;
-}
+import type { CategoryItem } from "@/types/content";
 
 export function BlogSearch({ categories }: { categories: CategoryItem[] }) {
   const router = useRouter();
