@@ -1,17 +1,27 @@
 import Link from "next/link";
 import { Facebook, Instagram, Linkedin, Twitter, Mail, Phone, MapPin } from "lucide-react";
-import { siteConfig } from "@/config/site";
+import type { SiteSettings } from "@/types/settings";
 
-export function Footer() {
+interface FooterProps {
+  settings: SiteSettings;
+  services: { title?: string; slug?: string }[];
+}
+
+export function Footer({ settings, services }: FooterProps) {
+  const social = [
+    { icon: Facebook, href: settings.socialLinks.facebook },
+    { icon: Instagram, href: settings.socialLinks.instagram },
+    { icon: Twitter, href: settings.socialLinks.twitter },
+    { icon: Linkedin, href: settings.socialLinks.linkedin },
+  ].filter((item) => item.href);
+
   return (
     <footer className="bg-dark text-white">
       <div className="container mx-auto px-4 py-16 md:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="text-2xl font-bold">
-              Green<span className="text-primary">Scape</span> Pro
-            </h3>
-            <p className="mt-4 text-white/70">{siteConfig.description}</p>
+            <h3 className="text-2xl font-bold">{settings.siteName}</h3>
+            <p className="mt-4 text-white/70">{settings.seo.defaultDescription}</p>
           </div>
 
           <div>
@@ -30,8 +40,12 @@ export function Footer() {
           <div>
             <h4 className="mb-4 font-semibold">Services</h4>
             <ul className="space-y-2 text-white/70">
-              {siteConfig.services.slice(0, 5).map((s) => (
-                <li key={s}>{s}</li>
+              {services.slice(0, 5).map((s) => (
+                <li key={s.slug}>
+                  <Link href={`/services/${s.slug}`} className="hover:text-accent transition-colors">
+                    {s.title}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -41,24 +55,19 @@ export function Footer() {
             <ul className="space-y-3 text-white/70">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary" />
-                {siteConfig.links.phone}
+                {settings.phone}
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary" />
-                {siteConfig.links.email}
+                {settings.email}
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-primary mt-1" />
-                {siteConfig.links.address}
+                {settings.address}
               </li>
             </ul>
             <div className="mt-6 flex gap-4">
-              {[
-                { icon: Facebook, href: siteConfig.social.facebook },
-                { icon: Instagram, href: siteConfig.social.instagram },
-                { icon: Twitter, href: siteConfig.social.twitter },
-                { icon: Linkedin, href: siteConfig.social.linkedin },
-              ].map(({ icon: Icon, href }, i) => (
+              {social.map(({ icon: Icon, href }, i) => (
                 <a
                   key={i}
                   href={href}
@@ -75,7 +84,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-white/10 pt-8 text-center text-sm text-white/50">
-          © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          © {new Date().getFullYear()} {settings.siteName}. All rights reserved.
         </div>
       </div>
     </footer>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -19,9 +20,17 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+  siteName: string;
+  logo?: string;
+}
+
+export function Navbar({ siteName, logo }: NavbarProps) {
   const pathname = usePathname();
   const { mobileMenuOpen, setMobileMenuOpen } = useUIStore();
+  const brandParts = siteName.split(" ");
+  const firstWord = brandParts[0] || siteName;
+  const rest = brandParts.slice(1).join(" ");
 
   return (
     <>
@@ -30,8 +39,15 @@ export function Navbar() {
           className="container mx-auto flex w-full items-center justify-between px-4 py-3 md:px-8"
           aria-label="Main navigation"
         >
-          <Link href="/" className="text-xl font-bold text-white">
-            Green<span className="text-primary">Scape</span>
+          <Link href="/" className="flex items-center gap-2 text-xl font-bold text-white">
+            {logo ? (
+              <Image src={logo} alt={siteName} width={140} height={40} className="h-10 w-auto object-contain" />
+            ) : (
+              <>
+                {firstWord}
+                {rest && <span className="text-primary">{rest}</span>}
+              </>
+            )}
           </Link>
 
           <div className="hidden items-center gap-8 lg:flex">

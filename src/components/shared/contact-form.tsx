@@ -7,11 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { siteConfig } from "@/config/site";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
-export function ContactForm() {
+interface ContactFormProps {
+  services?: { title?: string; slug?: string }[];
+}
+
+export function ContactForm({ services = [] }: ContactFormProps) {
   const {
     register,
     handleSubmit,
@@ -70,8 +73,10 @@ export function ContactForm() {
             className="mt-2 flex h-11 w-full rounded-2xl border border-input bg-background px-4 text-sm"
           >
             <option value="">Select a service</option>
-            {siteConfig.services.map((s) => (
-              <option key={s} value={s}>{s}</option>
+            {services.map((s) => (
+              <option key={s.slug || s.title} value={s.title}>
+                {s.title}
+              </option>
             ))}
           </select>
         </div>

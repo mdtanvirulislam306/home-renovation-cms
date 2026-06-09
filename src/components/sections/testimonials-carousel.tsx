@@ -5,18 +5,29 @@ import { Autoplay, Pagination } from "swiper/modules";
 import Image from "next/image";
 import { Star } from "lucide-react";
 import type { TestimonialCard } from "@/types/content";
+import type { SectionTitle } from "@/types/settings";
 import "swiper/css";
 import "swiper/css/pagination";
 
-export function TestimonialsCarousel({ testimonials }: { testimonials: TestimonialCard[] }) {
+export function TestimonialsCarousel({
+  testimonials,
+  section,
+  googleReviewsUrl,
+}: {
+  testimonials: TestimonialCard[];
+  section?: SectionTitle;
+  googleReviewsUrl?: string;
+}) {
   if (!testimonials.length) return null;
 
   return (
     <section className="py-24 bg-muted/30">
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-12">
-          <span className="text-primary font-medium">Testimonials</span>
-          <h2 className="mt-2 text-3xl font-bold md:text-5xl">What Our Clients Say</h2>
+          {section?.eyebrow && <span className="text-primary font-medium">{section.eyebrow}</span>}
+          <h2 className="mt-2 text-3xl font-bold md:text-5xl">
+            {section?.title || "What Our Clients Say"}
+          </h2>
         </div>
 
         <Swiper
@@ -58,7 +69,7 @@ export function TestimonialsCarousel({ testimonials }: { testimonials: Testimoni
 
         <div className="text-center mt-8">
           <a
-            href={process.env.NEXT_PUBLIC_GOOGLE_REVIEWS_URL || "#"}
+            href={googleReviewsUrl || "#"}
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary font-medium hover:underline"

@@ -5,17 +5,24 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { ServiceCard } from "@/types/content";
+import type { SectionTitle } from "@/types/settings";
 
-export function ServicesGrid({ services }: { services: ServiceCard[] }) {
+export function ServicesGrid({
+  services,
+  section,
+}: {
+  services: ServiceCard[];
+  section?: SectionTitle;
+}) {
   return (
     <section className="py-24">
       <div className="container mx-auto px-4 md:px-8">
         <div className="text-center mb-16">
-          <span className="text-primary font-medium">What We Do</span>
-          <h2 className="mt-2 text-3xl font-bold md:text-5xl">Our Services</h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive landscaping and property services tailored to your needs.
-          </p>
+          {section?.eyebrow && <span className="text-primary font-medium">{section.eyebrow}</span>}
+          <h2 className="mt-2 text-3xl font-bold md:text-5xl">{section?.title || "Our Services"}</h2>
+          {section?.subtitle && (
+            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">{section.subtitle}</p>
+          )}
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -218,6 +218,81 @@ async function seed() {
     phone: "+1 (555) 123-4567",
     email: "hello@greenscapepro.com",
     address: "123 Garden Lane, Green Valley, CA 90210",
+    businessHours: "Mon–Sat: 7am – 6pm",
+    primaryColor: "#3BAE41",
+    secondaryColor: "#07140C",
+    accentColor: "#C7F36B",
+    heroBadge: "Premium Landscaping & Property Services",
+    heroTitle: "Transform Your",
+    heroHighlight: "Outdoor Space",
+    heroSubtitle:
+      "Expert landscaping, fencing, roof cleaning, and property maintenance. Trusted by 1,800+ homeowners across the region.",
+    heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80",
+    heroCtaPrimary: "Get Free Quote",
+    heroCtaSecondary: "Our Services",
+    stats: [
+      { label: "Projects Completed", value: 2500, suffix: "+" },
+      { label: "Happy Clients", value: 1800, suffix: "+" },
+      { label: "Years Experience", value: 15, suffix: "+" },
+      { label: "Team Members", value: 45, suffix: "+" },
+    ],
+    features: [
+      {
+        title: "Fully Insured",
+        description:
+          "Complete peace of mind with comprehensive insurance coverage on every project.",
+        icon: "shield",
+      },
+      {
+        title: "On-Time Delivery",
+        description: "We respect your schedule and deliver projects on time, every time.",
+        icon: "clock",
+      },
+      {
+        title: "Award Winning",
+        description:
+          "Recognized excellence in landscaping and property services across the region.",
+        icon: "award",
+      },
+      {
+        title: "Eco-Friendly",
+        description: "Sustainable practices and environmentally responsible solutions.",
+        icon: "leaf",
+      },
+    ],
+    sectionTitles: {
+      services: {
+        eyebrow: "What We Do",
+        title: "Our Services",
+        subtitle: "Comprehensive landscaping and property services tailored to your needs.",
+      },
+      caseStudies: { eyebrow: "Portfolio", title: "Featured Case Studies" },
+      blog: { eyebrow: "Blog", title: "Latest Insights" },
+      testimonials: { eyebrow: "Testimonials", title: "What Our Clients Say" },
+      contact: {
+        eyebrow: "Get In Touch",
+        title: "Request a Free Quote",
+        subtitle: "Tell us about your project and we'll get back to you within 24 hours.",
+      },
+      whyChooseUs: {
+        eyebrow: "Why Choose Us",
+        title: "The Trusted Choice for Property Excellence",
+        subtitle:
+          "With over 15 years of experience, we combine craftsmanship, reliability, and premium materials to deliver outstanding results.",
+      },
+    },
+    socialLinks: {
+      facebook: "https://facebook.com",
+      instagram: "https://instagram.com",
+      twitter: "https://twitter.com",
+      linkedin: "https://linkedin.com",
+    },
+    seo: {
+      defaultTitle: "GreenScape Pro",
+      defaultDescription:
+        "Premium landscaping and property services — expert lawn care, fencing, roof cleaning, and more across your local area.",
+      keywords: ["landscaping", "property services", "lawn care"],
+    },
   });
 
   console.log("Seed completed successfully!");

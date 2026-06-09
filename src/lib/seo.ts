@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
+import type { SiteSettings } from "@/types/settings";
 
 interface GenerateMetadataProps {
   title?: string;
@@ -7,6 +8,7 @@ interface GenerateMetadataProps {
   image?: string;
   path?: string;
   noIndex?: boolean;
+  settings?: SiteSettings;
 }
 
 export function generatePageMetadata({
@@ -15,22 +17,26 @@ export function generatePageMetadata({
   image,
   path = "",
   noIndex = false,
+  settings,
 }: GenerateMetadataProps): Metadata {
-  const pageTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.name;
-  const pageDescription = description || siteConfig.description;
-  const url = `${siteConfig.url}${path}`;
-  const ogImage = image || `${siteConfig.url}${siteConfig.ogImage}`;
+  const siteName = settings?.siteName || siteConfig.name;
+  const siteDescription = settings?.seo.defaultDescription || siteConfig.description;
+  const siteUrl = siteConfig.url;
+  const pageTitle = title ? `${title} | ${siteName}` : siteName;
+  const pageDescription = description || siteDescription;
+  const url = `${siteUrl}${path}`;
+  const ogImage = image || settings?.logo || `${siteUrl}${siteConfig.ogImage}`;
 
   return {
     title: pageTitle,
     description: pageDescription,
-    metadataBase: new URL(siteConfig.url),
+    metadataBase: new URL(siteUrl),
     alternates: { canonical: url },
     openGraph: {
       title: pageTitle,
       description: pageDescription,
       url,
-      siteName: siteConfig.name,
+      siteName,
       images: [{ url: ogImage, width: 1200, height: 630, alt: pageTitle }],
       locale: "en_US",
       type: "website",
@@ -45,21 +51,24 @@ export function generatePageMetadata({
   };
 }
 
-export function generateOrganizationSchema() {
+export function generateOrganizationSchema(settings?: SiteSettings) {
+  const siteName = settings?.siteName || siteConfig.name;
+  const siteDescription = settings?.seo.defaultDescription || siteConfig.description;
+
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: siteConfig.name,
-    description: siteConfig.description,
+    name: siteName,
+    description: siteDescription,
     url: siteConfig.url,
-    telephone: siteConfig.links.phone,
-    email: siteConfig.links.email,
+    telephone: settings?.phone || siteConfig.links.phone,
+    email: settings?.email || siteConfig.links.email,
     address: {
       "@type": "PostalAddress",
-      streetAddress: siteConfig.links.address,
+      streetAddress: settings?.address || siteConfig.links.address,
     },
     priceRange: "$$",
-    image: `${siteConfig.url}${siteConfig.ogImage}`,
+    image: settings?.logo || `${siteConfig.url}${siteConfig.ogImage}`,
   };
 }
 

@@ -3,8 +3,15 @@ import Image from "next/image";
 import { formatDate } from "@/lib/utils";
 import { getPopulatedName } from "@/lib/mongoose-utils";
 import type { BlogCard } from "@/types/content";
+import type { SectionTitle } from "@/types/settings";
 
-export function BlogPreview({ posts }: { posts: BlogCard[] }) {
+export function BlogPreview({
+  posts,
+  section,
+}: {
+  posts: BlogCard[];
+  section?: SectionTitle;
+}) {
   if (!posts.length) return null;
 
   return (
@@ -12,8 +19,8 @@ export function BlogPreview({ posts }: { posts: BlogCard[] }) {
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
           <div>
-            <span className="text-primary font-medium">Blog</span>
-            <h2 className="mt-2 text-3xl font-bold md:text-5xl">Latest Insights</h2>
+            {section?.eyebrow && <span className="text-primary font-medium">{section.eyebrow}</span>}
+            <h2 className="mt-2 text-3xl font-bold md:text-5xl">{section?.title || "Latest Insights"}</h2>
           </div>
           <Link href="/blog" className="mt-4 md:mt-0 text-primary font-semibold hover:underline">
             View all posts →

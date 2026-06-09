@@ -1,9 +1,9 @@
 "use client";
 
-import { siteConfig } from "@/config/site";
 import { useCounter } from "@/hooks/use-counter";
+import type { StatItem } from "@/types/settings";
 
-function StatItem({ value, suffix, label }: { value: number; suffix: string; label: string }) {
+function StatItemDisplay({ value, suffix, label }: StatItem) {
   const { count, ref } = useCounter(value);
 
   return (
@@ -17,13 +17,15 @@ function StatItem({ value, suffix, label }: { value: number; suffix: string; lab
   );
 }
 
-export function StatsSection() {
+export function StatsSection({ stats }: { stats: StatItem[] }) {
+  if (!stats.length) return null;
+
   return (
     <section className="py-20 bg-muted/50">
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {siteConfig.stats.map((stat) => (
-            <StatItem key={stat.label} {...stat} />
+          {stats.map((stat) => (
+            <StatItemDisplay key={stat.label} {...stat} />
           ))}
         </div>
       </div>

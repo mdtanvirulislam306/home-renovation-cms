@@ -2,8 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import type { CaseStudyCard } from "@/types/content";
+import type { SectionTitle } from "@/types/settings";
 
-export function CaseStudiesPreview({ caseStudies }: { caseStudies: CaseStudyCard[] }) {
+export function CaseStudiesPreview({
+  caseStudies,
+  section,
+}: {
+  caseStudies: CaseStudyCard[];
+  section?: SectionTitle;
+}) {
   if (!caseStudies.length) return null;
 
   return (
@@ -11,8 +18,10 @@ export function CaseStudiesPreview({ caseStudies }: { caseStudies: CaseStudyCard
       <div className="container mx-auto px-4 md:px-8">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
           <div>
-            <span className="text-primary font-medium">Portfolio</span>
-            <h2 className="mt-2 text-3xl font-bold md:text-5xl">Featured Case Studies</h2>
+            {section?.eyebrow && <span className="text-primary font-medium">{section.eyebrow}</span>}
+            <h2 className="mt-2 text-3xl font-bold md:text-5xl">
+              {section?.title || "Featured Case Studies"}
+            </h2>
           </div>
           <Link href="/case-studies" className="mt-4 md:mt-0 text-primary font-semibold hover:underline">
             View all →

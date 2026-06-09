@@ -1,6 +1,10 @@
-export function ServiceArea() {
-  const mapsUrl =
-    process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL ||
+interface ServiceAreaProps {
+  mapsUrl?: string;
+}
+
+export function ServiceArea({ mapsUrl }: ServiceAreaProps) {
+  const embedUrl =
+    mapsUrl ||
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024!2d-73.9!3d40.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzAwLjAiTiA3M8KwNTQnMDAuMCJX!5e0!3m2!1sen!2sus!4v1";
 
   return (
@@ -16,7 +20,7 @@ export function ServiceArea() {
 
         <div className="overflow-hidden rounded-2xl shadow-premium aspect-[16/9] md:aspect-[21/9]">
           <iframe
-            src={mapsUrl}
+            src={embedUrl}
             width="100%"
             height="100%"
             style={{ border: 0, minHeight: 400 }}

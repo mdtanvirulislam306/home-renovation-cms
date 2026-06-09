@@ -2,18 +2,25 @@ import Image from "next/image";
 import { PageHeader } from "@/components/shared/page-header";
 import { generatePageMetadata } from "@/lib/seo";
 import { StatsSection } from "@/components/sections/stats-section";
+import { getSiteSettings } from "@/lib/site-settings";
 
-export const metadata = generatePageMetadata({
-  title: "About Us",
-  description: "Learn about GreenScape Pro — your trusted landscaping and property services partner.",
-  path: "/about",
-});
+export async function generateMetadata() {
+  const settings = await getSiteSettings();
+  return generatePageMetadata({
+    title: "About Us",
+    description: `Learn about ${settings.siteName} — your trusted landscaping and property services partner.`,
+    path: "/about",
+    settings,
+  });
+}
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await getSiteSettings();
+
   return (
     <>
       <PageHeader
-        title="About GreenScape Pro"
+        title={`About ${settings.siteName}`}
         description="Passionate professionals dedicated to transforming outdoor spaces."
         breadcrumbs={[{ label: "About" }]}
       />
@@ -23,7 +30,7 @@ export default function AboutPage() {
           <div>
             <h2 className="text-3xl font-bold">Our Story</h2>
             <p className="mt-4 text-muted-foreground text-lg leading-relaxed">
-              Founded over 15 years ago, GreenScape Pro has grown from a small local crew into
+              Founded over 15 years ago, {settings.siteName} has grown from a small local crew into
               a full-service landscaping and property maintenance company trusted by thousands
               of homeowners and businesses.
             </p>
@@ -45,7 +52,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <StatsSection />
+      <StatsSection stats={settings.stats} />
     </>
   );
 }

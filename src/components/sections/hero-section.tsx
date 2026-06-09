@@ -5,13 +5,42 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import type { SiteSettings, StatItem } from "@/types/settings";
 
-export function HeroSection() {
+interface HeroSectionProps {
+  settings: Pick<
+    SiteSettings,
+    | "heroBadge"
+    | "heroTitle"
+    | "heroHighlight"
+    | "heroSubtitle"
+    | "heroImage"
+    | "heroCtaPrimary"
+    | "heroCtaSecondary"
+    | "stats"
+  >;
+}
+
+function HeroStat({ stat }: { stat: StatItem }) {
+  return (
+    <div className="rounded-2xl bg-white/5 p-4 text-center">
+      <p className="text-2xl font-bold text-accent">
+        {stat.value.toLocaleString()}
+        {stat.suffix}
+      </p>
+      <p className="text-sm text-white/60">{stat.label}</p>
+    </div>
+  );
+}
+
+export function HeroSection({ settings }: HeroSectionProps) {
+  const heroStats = settings.stats.slice(0, 4);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <Image
-        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80"
-        alt="Modern home exterior renovation"
+        src={settings.heroImage}
+        alt={settings.heroTitle}
         fill
         priority
         className="object-cover"
@@ -27,26 +56,23 @@ export function HeroSection() {
             transition={{ duration: 0.8 }}
           >
             <span className="inline-block rounded-full bg-accent/20 px-4 py-1.5 text-sm font-medium text-accent mb-6">
-              Premium Landscaping & Property Services
+              {settings.heroBadge}
             </span>
             <h1 className="text-4xl font-bold tracking-tight text-white md:text-6xl lg:text-7xl">
-              Transform Your{" "}
+              {settings.heroTitle}{" "}
               <span className="text-gradient bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Outdoor Space
+                {settings.heroHighlight}
               </span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-white/80">
-              Expert landscaping, fencing, roof cleaning, and property maintenance.
-              Trusted by 1,800+ homeowners across the region.
-            </p>
+            <p className="mt-6 max-w-xl text-lg text-white/80">{settings.heroSubtitle}</p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Button asChild size="lg">
                 <Link href="/contact">
-                  Get Free Quote <ArrowRight className="ml-2 h-5 w-5" />
+                  {settings.heroCtaPrimary} <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="border-white/30 text-white hover:bg-white/10">
-                <Link href="/services">Our Services</Link>
+                <Link href="/services">{settings.heroCtaSecondary}</Link>
               </Button>
             </div>
           </motion.div>
@@ -67,16 +93,8 @@ export function HeroSection() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              {[
-                { label: "Projects Done", value: "2,500+" },
-                { label: "Satisfaction", value: "99%" },
-                { label: "Team Size", value: "45+" },
-                { label: "Years Exp.", value: "15+" },
-              ].map((stat) => (
-                <div key={stat.label} className="rounded-2xl bg-white/5 p-4 text-center">
-                  <p className="text-2xl font-bold text-accent">{stat.value}</p>
-                  <p className="text-sm text-white/60">{stat.label}</p>
-                </div>
+              {heroStats.map((stat) => (
+                <HeroStat key={stat.label} stat={stat} />
               ))}
             </div>
           </motion.div>
