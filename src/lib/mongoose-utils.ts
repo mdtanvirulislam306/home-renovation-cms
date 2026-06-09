@@ -1,3 +1,8 @@
+/** Convert Mongoose lean docs to plain JSON-safe values for Client Components */
+export function serializeForClient<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
 /** Extract MongoDB ObjectId string from populated doc or raw id */
 export function getRefId(ref: unknown): string {
   if (!ref) return "";

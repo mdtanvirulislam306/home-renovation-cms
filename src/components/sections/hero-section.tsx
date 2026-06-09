@@ -10,8 +10,8 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <Image
-        src="https://images.unsplash.com/photo-1558904541-efa843a96f01?w=1920&q=80"
-        alt="Beautiful landscaped garden"
+        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80"
+        alt="Modern home exterior renovation"
         fill
         priority
         className="object-cover"

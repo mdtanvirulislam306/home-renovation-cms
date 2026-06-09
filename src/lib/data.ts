@@ -1,4 +1,5 @@
 import { connectDB } from "@/lib/db";
+import { serializeForClient } from "@/lib/mongoose-utils";
 import {
   Service,
   Blog,
@@ -13,12 +14,14 @@ export async function getPublishedServices(limit?: number) {
   await connectDB();
   const query = Service.find({ status: "published" }).sort({ displayOrder: 1 });
   if (limit) query.limit(limit);
-  return query.lean();
+  return serializeForClient(await query.lean());
 }
 
 export async function getServiceBySlug(slug: string) {
   await connectDB();
-  return Service.findOne({ slug, status: "published" }).lean();
+  return serializeForClient(
+    await Service.findOne({ slug, status: "published" }).lean()
+  );
 }
 
 export async function getPublishedBlogs(params?: {
@@ -51,54 +54,70 @@ export async function getPublishedBlogs(params?: {
     Blog.countDocuments(filter),
   ]);
 
-  return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
+  return serializeForClient({
+    data,
+    total,
+    page,
+    limit,
+    totalPages: Math.ceil(total / limit),
+  });
 }
 
 export async function getBlogBySlug(slug: string) {
   await connectDB();
-  return Blog.findOne({ slug, status: "published" })
-    .populate("category", "name slug")
-    .lean();
+  return serializeForClient(
+    await Blog.findOne({ slug, status: "published" })
+      .populate("category", "name slug")
+      .lean()
+  );
 }
 
 export async function getRelatedBlogs(categoryId: string, excludeSlug: string, limit = 3) {
   await connectDB();
-  return Blog.find({
-    category: categoryId,
-    slug: { $ne: excludeSlug },
-    status: "published",
-  })
-    .sort({ publishDate: -1 })
-    .limit(limit)
-    .populate("category", "name slug")
-    .lean();
+  return serializeForClient(
+    await Blog.find({
+      category: categoryId,
+      slug: { $ne: excludeSlug },
+      status: "published",
+    })
+      .sort({ publishDate: -1 })
+      .limit(limit)
+      .populate("category", "name slug")
+      .lean()
+  );
 }
 
 export async function getCategories() {
   await connectDB();
-  return Category.find().sort({ name: 1 }).lean();
+  return serializeForClient(await Category.find().sort({ name: 1 }).lean());
 }
 
 export async function getPublishedGallery() {
   await connectDB();
-  return Gallery.find({ status: "published" }).sort({ displayOrder: 1 }).lean();
+  return serializeForClient(
+    await Gallery.find({ status: "published" }).sort({ displayOrder: 1 }).lean()
+  );
 }
 
 export async function getPublishedTestimonials() {
   await connectDB();
-  return Testimonial.find({ status: "published" }).sort({ displayOrder: 1 }).lean();
+  return serializeForClient(
+    await Testimonial.find({ status: "published" }).sort({ displayOrder: 1 }).lean()
+  );
 }
 
 export async function getPublishedCaseStudies(limit?: number) {
   await connectDB();
   const query = CaseStudy.find({ status: "published" }).sort({ createdAt: -1 });
   if (limit) query.limit(limit);
-  return query.lean();
+  return serializeForClient(await query.lean());
 }
 
 export async function getCaseStudyBySlug(slug: string) {
   await connectDB();
-  return CaseStudy.findOne({ slug, status: "published" }).lean();
+  return serializeForClient(
+    await CaseStudy.findOne({ slug, status: "published" }).lean()
+  );
 }
 
 export async function getSettings() {
@@ -108,5 +127,5 @@ export async function getSettings() {
     await Settings.create({});
     settings = await Settings.findOne().lean();
   }
-  return settings;
+  return serializeForClient(settings);
 }

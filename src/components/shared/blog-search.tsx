@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 
 interface CategoryItem {
-  _id?: unknown;
+  _id?: string;
   name?: string;
   slug?: string;
 }

@@ -25,9 +25,9 @@ export function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50">
+      <header className="fixed top-0 left-0 right-0 z-50 w-full border-b border-white/10 bg-dark/80 backdrop-blur-xl">
         <nav
-          className="mx-4 mt-4 flex items-center justify-between rounded-2xl border border-white/10 bg-dark/80 px-6 py-3 backdrop-blur-xl md:mx-8"
+          className="container mx-auto flex w-full items-center justify-between px-4 py-3 md:px-8"
           aria-label="Main navigation"
         >
           <Link href="/" className="text-xl font-bold text-white">
