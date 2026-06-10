@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -17,6 +18,7 @@ interface RichTextEditorProps {
 
 export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       Link.configure({ openOnClick: false }),
@@ -24,7 +26,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
       Placeholder.configure({ placeholder: placeholder || "Write content..." }),
     ],
     content: value,
-    onUpdate: ({ editor }) => onChange(editor.getHTML()),
+    onUpdate: ({ editor: ed }) => onChange(ed.getHTML()),
     editorProps: {
       attributes: {
         class: "prose prose-sm max-w-none min-h-[200px] p-4 focus:outline-none dark:prose-invert",
@@ -32,7 +34,19 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
     },
   });
 
-  if (!editor) return null;
+  useEffect(() => {
+    if (!editor) return;
+    const current = editor.getHTML();
+    if (value !== current) {
+      editor.commands.setContent(value || "", { emitUpdate: false });
+    }
+  }, [editor, value]);
+
+  if (!editor) {
+    return (
+      <div className="rounded-2xl border min-h-[240px] animate-pulse bg-muted/30" />
+    );
+  }
 
   const tools = [
     { icon: Bold, action: () => editor.chain().focus().toggleBold().run(), active: editor.isActive("bold") },

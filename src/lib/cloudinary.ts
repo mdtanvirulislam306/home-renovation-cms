@@ -1,7 +1,32 @@
 import { v2 as cloudinary } from "cloudinary";
 
+const PLACEHOLDER_VALUES = new Set(["your_cloud_name", "your_api_key", "your_api_secret"]);
+
+function isValidCredential(value: string | undefined): boolean {
+  if (!value) return false;
+  const trimmed = value.trim();
+  if (!trimmed || PLACEHOLDER_VALUES.has(trimmed)) return false;
+  // Reject masked/placeholder secrets like **********
+  if (/^[*•.]+$/.test(trimmed)) return false;
+  return true;
+}
+
+export function isCloudinaryConfigured(): boolean {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME?.trim();
+  const apiKey = process.env.CLOUDINARY_API_KEY?.trim();
+  const apiSecret = process.env.CLOUDINARY_API_SECRET?.trim();
+
+  return Boolean(
+    isValidCredential(cloudName) &&
+      isValidCredential(apiKey) &&
+      apiSecret &&
+      apiSecret.length >= 20 &&
+      isValidCredential(apiSecret)
+  );
+}
+
 function ensureConfig() {
-  if (!process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME) {
+  if (!isCloudinaryConfigured()) {
     throw new Error("Cloudinary is not configured");
   }
   cloudinary.config({

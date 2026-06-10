@@ -64,6 +64,7 @@ export default async function HomePage() {
       <ContactSection
         section={settings.sectionTitles.contact}
         services={services}
+        settings={settings}
       />
     </>
   );

@@ -48,6 +48,26 @@ export interface ISettings extends Document {
   googleMapsEmbedUrl?: string;
   googleReviewsUrl?: string;
   heroVideoUrl?: string;
+  about: {
+    title?: string;
+    subtitle?: string;
+    storyTitle?: string;
+    storyContent?: string;
+    image?: string;
+    imageAlt?: string;
+    seoTitle?: string;
+    seoDescription?: string;
+    showStats?: boolean;
+  };
+  smtp?: {
+    host?: string;
+    port?: number;
+    secure?: boolean;
+    user?: string;
+    pass?: string;
+    from?: string;
+    adminEmail?: string;
+  };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -194,9 +214,43 @@ const SettingsSchema = new Schema<ISettings>(
     googleMapsEmbedUrl: String,
     googleReviewsUrl: String,
     heroVideoUrl: String,
+    smtp: {
+      host: String,
+      port: { type: Number, default: 587 },
+      secure: { type: Boolean, default: false },
+      user: String,
+      pass: String,
+      from: String,
+      adminEmail: String,
+    },
+    about: {
+      title: { type: String, default: "" },
+      subtitle: {
+        type: String,
+        default: "Passionate professionals dedicated to transforming outdoor spaces.",
+      },
+      storyTitle: { type: String, default: "Our Story" },
+      storyContent: {
+        type: String,
+        default:
+          "<p>Founded over 15 years ago, we have grown from a small local crew into a full-service landscaping and property maintenance company trusted by thousands of homeowners and businesses.</p><p>We believe every property deserves expert care — from lush gardens to pristine roofs, clean gutters, and flawless fencing. Our team combines craftsmanship with modern equipment to deliver results that exceed expectations.</p>",
+      },
+      image: {
+        type: String,
+        default: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=800",
+      },
+      imageAlt: { type: String, default: "Our team at work" },
+      seoTitle: String,
+      seoDescription: String,
+      showStats: { type: Boolean, default: true },
+    },
   },
   { timestamps: true }
 );
+
+if (process.env.NODE_ENV !== "production" && mongoose.models.Settings) {
+  delete mongoose.models.Settings;
+}
 
 const Settings: Model<ISettings> =
   mongoose.models.Settings || mongoose.model<ISettings>("Settings", SettingsSchema);

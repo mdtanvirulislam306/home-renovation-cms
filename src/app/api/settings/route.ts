@@ -1,6 +1,8 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { mergeAboutContent } from "@/lib/about-defaults";
 import { connectDB } from "@/lib/db";
+import { isMaskedPassword, maskSmtpForClient } from "@/lib/smtp-config";
 import { serializeForClient } from "@/lib/mongoose-utils";
 import Settings from "@/models/Settings";
 import { apiError, apiSuccess } from "@/lib/api-response";
@@ -14,7 +16,12 @@ export async function GET() {
       await Settings.create({});
       settings = await Settings.findOne().lean();
     }
-    return apiSuccess(serializeForClient(settings));
+    const serialized = serializeForClient(settings);
+    const withAbout = {
+      ...serialized,
+      about: mergeAboutContent(serialized?.about),
+    };
+    return apiSuccess(maskSmtpForClient(withAbout));
   } catch {
     return apiError("Failed to fetch settings", 500);
   }
@@ -34,12 +41,32 @@ export async function PUT(request: Request) {
     }
 
     await connectDB();
+    const existing = await Settings.findOne().lean();
+    const updateData = { ...parsed.data };
+
+    if (updateData.smtp) {
+      const pass = updateData.smtp.pass;
+      if (!pass || isMaskedPassword(pass)) {
+        updateData.smtp = {
+          ...updateData.smtp,
+          pass: existing?.smtp?.pass || process.env.SMTP_PASS || "",
+        };
+      }
+    }
+
     const settings = await Settings.findOneAndUpdate(
       {},
-      { $set: parsed.data },
+      { $set: updateData },
       { new: true, upsert: true }
     ).lean();
-    return apiSuccess(serializeForClient(settings));
+
+    const serialized = serializeForClient(settings);
+    return apiSuccess(
+      maskSmtpForClient({
+        ...serialized,
+        about: mergeAboutContent(serialized?.about),
+      })
+    );
   } catch {
     return apiError("Failed to update settings", 500);
   }

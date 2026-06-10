@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/db";
 import Inquiry from "@/models/Inquiry";
+import Settings from "@/models/Settings";
 import { contactSchema } from "@/validations/contact";
 import { sendInquiryNotification } from "@/lib/email";
 import { sanitizeText } from "@/lib/sanitize";
@@ -31,7 +32,8 @@ export async function POST(request: Request) {
     const inquiry = await Inquiry.create(data);
 
     try {
-      await sendInquiryNotification(data);
+      const settings = await Settings.findOne().lean();
+      await sendInquiryNotification({ ...data, siteName: settings?.siteName });
     } catch {
       // Inquiry saved even if email fails
     }

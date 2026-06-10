@@ -16,6 +16,18 @@ export interface SectionTitle {
   subtitle?: string;
 }
 
+export interface AboutContent {
+  title: string;
+  subtitle: string;
+  storyTitle: string;
+  storyContent: string;
+  image: string;
+  imageAlt: string;
+  seoTitle?: string;
+  seoDescription?: string;
+  showStats: boolean;
+}
+
 export interface SiteSettings {
   siteName: string;
   tagline: string;
@@ -35,6 +47,7 @@ export interface SiteSettings {
   heroImage: string;
   heroCtaPrimary: string;
   heroCtaSecondary: string;
+  heroVideoUrl?: string;
   stats: StatItem[];
   features: FeatureItem[];
   sectionTitles: {
@@ -63,4 +76,5 @@ export interface SiteSettings {
   };
   googleMapsEmbedUrl?: string;
   googleReviewsUrl?: string;
+  about: AboutContent;
 }

@@ -107,17 +107,20 @@ async function seed() {
 
   const CaseStudy = mongoose.model(
     "CaseStudy",
-    new mongoose.Schema({
-      title: String,
-      slug: String,
-      summary: String,
-      challenge: String,
-      solution: String,
-      results: String,
-      featuredImage: String,
-      status: String,
-      location: String,
-    })
+    new mongoose.Schema(
+      {
+        title: String,
+        slug: String,
+        summary: String,
+        challenge: String,
+        solution: String,
+        results: String,
+        featuredImage: String,
+        status: String,
+        location: String,
+      },
+      { timestamps: true }
+    )
   );
 
   const Gallery = mongoose.model(

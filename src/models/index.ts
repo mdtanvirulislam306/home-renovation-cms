@@ -6,4 +6,5 @@ export { default as Gallery } from "./Gallery";
 export { default as Testimonial } from "./Testimonial";
 export { default as CaseStudy } from "./CaseStudy";
 export { default as Inquiry } from "./Inquiry";
+export { default as Chat } from "./Chat";
 export { default as Settings } from "./Settings";

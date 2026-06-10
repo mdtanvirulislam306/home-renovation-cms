@@ -27,17 +27,24 @@ export function useUpload() {
         body: JSON.stringify({ file: base64, folder }),
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => null);
       setProgress(100);
 
-      if (!data.success) {
-        toast.error(data.error || "Upload failed");
+      if (!res.ok || !data?.success) {
+        const message =
+          data?.error ||
+          (res.status === 401
+            ? "Please sign in to upload images"
+            : res.status === 413
+              ? "Image is too large (max 10MB)"
+              : "Upload failed");
+        toast.error(message);
         return null;
       }
 
       return data.data.url as string;
     } catch {
-      toast.error("Upload failed");
+      toast.error("Upload failed — check your connection and try again");
       return null;
     } finally {
       setUploading(false);

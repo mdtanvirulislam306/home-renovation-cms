@@ -1,4 +1,5 @@
 import { siteConfig } from "@/config/site";
+import { mergeAboutContent } from "@/lib/about-defaults";
 import { getSettings } from "@/lib/data";
 import type { SiteSettings } from "@/types/settings";
 
@@ -41,6 +42,7 @@ export const defaultSiteSettings: SiteSettings = {
   heroImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80",
   heroCtaPrimary: "Get Free Quote",
   heroCtaSecondary: "Our Services",
+  heroVideoUrl: "https://www.youtube.com/watch?v=7e2DxN4k8eY",
   stats: [...siteConfig.stats],
   features: [
     {
@@ -78,6 +80,7 @@ export const defaultSiteSettings: SiteSettings = {
     process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL ||
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024!2d-73.9!3d40.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQyJzAwLjAiTiA3M8KwNTQnMDAuMCJX!5e0!3m2!1sen!2sus!4v1",
   googleReviewsUrl: process.env.NEXT_PUBLIC_GOOGLE_REVIEWS_URL,
+  about: mergeAboutContent(),
 };
 
 export function hexToHsl(hex: string): string {
@@ -158,6 +161,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       heroImage: stored.heroImage || defaultSiteSettings.heroImage,
       heroCtaPrimary: stored.heroCtaPrimary || defaultSiteSettings.heroCtaPrimary,
       heroCtaSecondary: stored.heroCtaSecondary || defaultSiteSettings.heroCtaSecondary,
+      heroVideoUrl: stored.heroVideoUrl ?? defaultSiteSettings.heroVideoUrl,
       stats: stored.stats?.length ? stored.stats : defaultSiteSettings.stats,
       features: stored.features?.length ? stored.features : defaultSiteSettings.features,
       sectionTitles: mergeSectionTitles(stored.sectionTitles),
@@ -174,6 +178,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       analytics: stored.analytics || defaultSiteSettings.analytics,
       googleMapsEmbedUrl: stored.googleMapsEmbedUrl || defaultSiteSettings.googleMapsEmbedUrl,
       googleReviewsUrl: stored.googleReviewsUrl || defaultSiteSettings.googleReviewsUrl,
+      about: mergeAboutContent(stored.about),
     };
   } catch {
     return defaultSiteSettings;

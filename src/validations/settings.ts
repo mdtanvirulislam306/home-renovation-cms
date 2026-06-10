@@ -4,6 +4,14 @@ const hexColor = z
   .string()
   .regex(/^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/, "Must be a valid hex color");
 
+const imagePath = z
+  .string()
+  .optional()
+  .or(z.literal(""))
+  .refine((val) => !val || val.startsWith("/") || /^https?:\/\//.test(val), {
+    message: "Must be a valid URL or path",
+  });
+
 const sectionTitleSchema = z.object({
   eyebrow: z.string().optional(),
   title: z.string().optional(),
@@ -13,8 +21,8 @@ const sectionTitleSchema = z.object({
 export const settingsSchema = z.object({
   siteName: z.string().min(1).optional(),
   tagline: z.string().optional(),
-  logo: z.string().url().optional().or(z.literal("")),
-  favicon: z.string().url().optional().or(z.literal("")),
+  logo: imagePath,
+  favicon: imagePath,
   phone: z.string().optional(),
   email: z.string().email().optional().or(z.literal("")),
   address: z.string().optional(),
@@ -26,7 +34,7 @@ export const settingsSchema = z.object({
   heroTitle: z.string().optional(),
   heroHighlight: z.string().optional(),
   heroSubtitle: z.string().optional(),
-  heroImage: z.string().url().optional().or(z.literal("")),
+  heroImage: imagePath,
   heroCtaPrimary: z.string().optional(),
   heroCtaSecondary: z.string().optional(),
   stats: z
@@ -81,7 +89,40 @@ export const settingsSchema = z.object({
     .optional(),
   googleMapsEmbedUrl: z.string().url().optional().or(z.literal("")),
   googleReviewsUrl: z.string().url().optional().or(z.literal("")),
-  heroVideoUrl: z.string().url().optional().or(z.literal("")),
+  heroVideoUrl: z
+    .string()
+    .optional()
+    .or(z.literal(""))
+    .refine(
+      (val) =>
+        !val ||
+        /^https?:\/\/(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/)|youtu\.be\/)/.test(val),
+      { message: "Must be a valid YouTube URL" }
+    ),
+  smtp: z
+    .object({
+      host: z.string().optional(),
+      port: z.coerce.number().optional(),
+      secure: z.boolean().optional(),
+      user: z.string().optional(),
+      pass: z.string().optional(),
+      from: z.string().optional(),
+      adminEmail: z.string().email().optional().or(z.literal("")),
+    })
+    .optional(),
+  about: z
+    .object({
+      title: z.string().optional(),
+      subtitle: z.string().optional(),
+      storyTitle: z.string().optional(),
+      storyContent: z.string().optional(),
+      image: imagePath,
+      imageAlt: z.string().optional(),
+      seoTitle: z.string().optional(),
+      seoDescription: z.string().optional(),
+      showStats: z.boolean().optional(),
+    })
+    .optional(),
 });
 
 export type SettingsInput = z.infer<typeof settingsSchema>;

@@ -53,8 +53,14 @@
   * {
     @apply border-border;
   }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground antialiased;
+  }
+  ::selection {
+    @apply bg-primary/30 text-foreground;
   }
 }
 
@@ -67,5 +73,52 @@
   }
   .text-gradient {
     @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+  .eyebrow-pill {
+    @apply inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-primary;
+  }
+  .section-mesh {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--primary) / 0.08), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 50%, hsl(var(--accent) / 0.06), transparent),
+      radial-gradient(ellipse 50% 30% at 0% 80%, hsl(var(--primary) / 0.05), transparent);
+  }
+  .section-mesh-dark {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59, 174, 65, 0.15), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(199, 243, 107, 0.08), transparent);
+  }
+  .card-modern {
+    @apply rounded-3xl border border-border/60 bg-card shadow-premium transition-all duration-300;
+  }
+  .card-modern-hover {
+    @apply card-modern hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_32px_64px_-16px_rgba(7,20,12,0.18)];
+  }
+  .grid-pattern {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .shine-border {
+    position: relative;
+  }
+  .shine-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(59, 174, 65, 0.4), transparent 40%, rgba(199, 243, 107, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .shine-border:hover::before {
+    opacity: 1;
   }
 }

@@ -31,7 +31,7 @@ export default async function ServicesPage() {
         description="Comprehensive landscaping and property maintenance solutions."
         breadcrumbs={[{ label: "Services" }]}
       />
-      <ServicesGrid services={services} section={settings.sectionTitles.services} />
+      <ServicesGrid services={services} section={settings.sectionTitles.services} showHeader={false} />
     </>
   );
 }
