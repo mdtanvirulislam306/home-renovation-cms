@@ -3,7 +3,6 @@ import { authOptions } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
 import Chat from "@/models/Chat";
 import { apiError, apiSuccess } from "@/lib/api-response";
-import { serializeForClient } from "@/lib/mongoose-utils";
 
 export async function GET() {
   const session = await getServerSession(authOptions);

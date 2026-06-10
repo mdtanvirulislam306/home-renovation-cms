@@ -6,7 +6,7 @@ import { getSiteSettings } from "@/lib/site-settings";
 import { getPublishedServices } from "@/lib/data";
 
 export default async function PublicLayout({ children }: { children: React.ReactNode }) {
-  let settings = await getSiteSettings();
+  const settings = await getSiteSettings();
   let services: { title?: string; slug?: string }[] = [];
 
   try {

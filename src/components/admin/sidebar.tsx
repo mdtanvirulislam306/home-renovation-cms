@@ -9,7 +9,6 @@ import {
   FileText,
   FolderOpen,
   Image,
-  MessageSquare,
   MessagesSquare,
   Mail,
   Settings,
