@@ -56,6 +56,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   session: { strategy: "jwt", maxAge: 24 * 60 * 60 },
+  useSecureCookies: process.env.NODE_ENV === "production",
   pages: { signIn: "/admin/login" },
   callbacks: {
     async jwt({ token, user }) {

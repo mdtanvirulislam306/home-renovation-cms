@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginInput } from "@/validations/auth";
@@ -14,7 +13,6 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -30,14 +28,14 @@ export default function AdminLoginPage() {
 
     setLoading(false);
 
-    if (result?.error) {
+    if (result?.error || result?.ok === false) {
       toast.error("Invalid email or password");
       return;
     }
 
     toast.success("Welcome back!");
-    router.push("/admin");
-    router.refresh();
+    // Full navigation ensures the session cookie is sent before middleware runs.
+    window.location.href = "/admin";
   };
 
   return (
